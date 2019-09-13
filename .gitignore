@@ -1,3 +1,7 @@
+# type de fichiers
 *.doc
 *.docx
 *.pdf
+
+# dossiers
+docs/
