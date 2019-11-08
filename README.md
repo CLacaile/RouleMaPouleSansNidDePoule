@@ -21,11 +21,11 @@ Dans le cadre du projet SI de DI5, l'équipe, constituée de Yann Paillet, Timot
 Pour paramétrer l'environnement de développement, suivre la démarche suivante : 
 
 1. Créer un environnement virtuel "venv" (il doit absoluement s'appeler "venv/") : 
-   ```bash
+   ```console
    RouleMaPouleSansNidDePoule$ python -m venv venv/ 
    ```
 2. Activer l'environnement sous Linux/Mac OS (avec le bash):
-    ```bash
+    ```console
    RouleMaPouleSansNidDePoule$ source venv/bin/activate
    ```
 3. Ou activer l'environnement sous Windows avec cmd (pas PowerShell):
@@ -33,6 +33,6 @@ Pour paramétrer l'environnement de développement, suivre la démarche suivante
     C:\RouleMaPouleSansNidDePoule> venv\Scripts\activate.bat
     ```
 4. Installer les dépendances : 
-   ```cmd
+   ```console
    RouleMaPouleSansNidDePoule$ pip install requirements.txt
    ```
