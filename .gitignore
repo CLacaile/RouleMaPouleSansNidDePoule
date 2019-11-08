@@ -4,4 +4,4 @@
 *.pdf
 
 # dossiers
-docs/
+venv/
