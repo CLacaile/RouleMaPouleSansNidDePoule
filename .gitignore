@@ -6,3 +6,5 @@
 # dossiers
 venv/
 .idea/
+
+RouleMaPoule/RouleMaPoule/__pycache__/
