@@ -36,3 +36,16 @@ Pour paramétrer l'environnement de développement, suivre la démarche suivante
    ```console
    RouleMaPouleSansNidDePoule$ pip install requirements.txt
    ```
+## Lancement du serveur
+
+Pour lancer le serveur de développement, il faut utiliser la commande suivante : 
+
+```console
+RouleMaPouleSansNidDePoule$ python manage.py runserver
+```
+
+Si des modifications ont été apportées au modèle, n'oubliez pas de lancer : 
+```console
+RouleMaPouleSansNidDePoule$ python manage.py makemigrations
+RouleMaPouleSansNidDePoule$ python manage.py migrate
+```
