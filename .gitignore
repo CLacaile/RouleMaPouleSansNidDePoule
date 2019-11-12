@@ -8,3 +8,5 @@ venv/
 .idea/
 
 RouleMaPoule/RouleMaPoule/__pycache__/
+
+RouleMaPoule/uploader/__pycache__/
