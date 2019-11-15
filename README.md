@@ -49,3 +49,27 @@ Si des modifications ont été apportées au modèle, n'oubliez pas de lancer :
 RouleMaPouleSansNidDePoule$ python manage.py makemigrations
 RouleMaPouleSansNidDePoule$ python manage.py migrate
 ```
+
+## Installation de la base de données (en local)
+
+1. Télécharger et installer Mongodb server community edition (https://www.mongodb.com/download-center/community)  
+Pour l'installer sous macOS suivre les instructions du lien suivant (https://medium.com/@saurabhkumar_4718/install-mongodb-without-homebrew-on-mac-os-2a98b68ab09c)
+
+2. Créer une base de données dans Mongodb
+    - En ligne de commande  
+    ```console
+    mongod
+   use RouleMaPoule_DB
+    ```
+    - Via l'interface graphique Mongodb Compass  (https://www.mongodb.com/download-center/compass)  
+    Lancer Mongodb Compass et creer une connection à l'adresse *localhost:27017*  
+    Clicker sur *create database*, entrer le nom de la db et creer la base de données    
+3. Renseigner le nom de cette base de données dans le fichier *settings.py* ('NAME': 'RouleMaPoule_DB')
+
+4. Charger le modèle dans la base de données une première fois, lancez : 
+```console
+RouleMaPouleSansNidDePoule$ python manage.py makemigrations
+RouleMaPouleSansNidDePoule$ python manage.py migrate
+```
+
+
