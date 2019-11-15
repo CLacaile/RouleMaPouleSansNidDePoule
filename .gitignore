@@ -10,3 +10,7 @@ venv/
 RouleMaPoule/RouleMaPoule/__pycache__/
 
 RouleMaPoule/uploader/__pycache__/
+
+RouleMaPoule/uploader/models/__pycache__/
+
+.vscode/

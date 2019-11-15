@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Path
+from .models import *
 
 # Register your models here.
 
 admin.site.register(Path)
+admin.site.register(Waypoint)
+admin.site.register(Acceleration)
