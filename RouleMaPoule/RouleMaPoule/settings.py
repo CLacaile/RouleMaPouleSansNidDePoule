@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'uploader',
+    'input',
 ]
 
 MIDDLEWARE = [
@@ -75,11 +75,11 @@ WSGI_APPLICATION = 'RouleMaPoule.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'djongo',
-         'NAME': 'RouleMaPoule_DB',
-     }
- }
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'RouleMaPoule_DB',
+    }
+}
 
 
 # Password validation
