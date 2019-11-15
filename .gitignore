@@ -6,13 +6,6 @@
 # dossiers
 venv/
 .idea/
-
-RouleMaPoule/RouleMaPoule/__pycache__/
-
-RouleMaPoule/uploader/__pycache__/
-
-RouleMaPoule/uploader/models/__pycache__/
+__pycache__/
 
 .vscode/
-
-RouleMaPoule/input/__pycache__/
