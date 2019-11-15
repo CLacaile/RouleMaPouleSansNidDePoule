@@ -1,0 +1,9 @@
+[
+  {
+    "model": "input.path",
+    "pk": 1,
+    "fields": {
+      "id_sensor": 2
+    }
+  }
+]
