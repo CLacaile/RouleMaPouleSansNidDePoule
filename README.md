@@ -79,3 +79,10 @@ RouleMaPouleSansNidDePoule$ python manage.py populate_db
 ```
 Script de population : (RouleMaPoule/input/management/comands/populate_db.py)
 
+## Insertion manuelle de données depuis un navigateur avec djangorestframework
+
+Pour insérer des données dans l'application, on peut utiliser le client web fournit par Django Rest Framework (DRF).
+Il faut ajouter manuellement chaque objet :
+- Ajouter un objet Path en se connectant à l'adresse localhost:8000/api/v1.0/input/path"
+- Ajouter un objet Waypoint en se connectant à l'adresse localhost:8000/api/v1.0/input/waypoint"
+- Ajouter un objet Acceleration en se connectant à l'adresse localhost:8000/api/v1.0/input/acceleration"
