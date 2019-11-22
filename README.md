@@ -71,5 +71,11 @@ Pour l'installer sous macOS suivre les instructions du lien suivant (https://med
 RouleMaPouleSansNidDePoule$ python manage.py makemigrations
 RouleMaPouleSansNidDePoule$ python manage.py migrate
 ```
+## Population de la base de données
 
+Pour populer la base de données lancez :
+```console
+RouleMaPouleSansNidDePoule$ python manage.py populate_db
+```
+Script de population : (RouleMaPoule/input/management/comands/populate_db.py)
 
