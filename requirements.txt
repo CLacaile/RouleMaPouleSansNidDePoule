@@ -5,6 +5,7 @@ chardet==3.0.4
 colorama==0.4.1
 dataclasses==0.6
 Django==2.2.7
+djangorestframework==3.10.3
 djongo==1.2.36
 docutils==0.15.2
 idna==2.8
