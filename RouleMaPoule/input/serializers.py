@@ -1,8 +1,6 @@
 from .models import Path, Waypoint, Acceleration
 from rest_framework import serializers
-from rest_framework.parsers import FileUploadParser
-from rest_framework.response import Response
-from rest_framework.views import APIView
+
 
 class PathSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
