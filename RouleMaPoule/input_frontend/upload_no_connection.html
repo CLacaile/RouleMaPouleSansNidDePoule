@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Roule ma poule à nid de poule - UPLOAD</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+
+
+</head>
+<body>
+	<div class="container mt-5">
+		<form method="post" enctype="multipart/form-data" id="FilesForm">
+
+			<div class="row justify-content-center">
+				<label  class="col-auto" for="file">Choose file to upload</label>
+			</div>
+
+			<div class="row justify-content-center">
+				<input  class="col-auto" type="file" id="file" name="file" multiple>
+
+			</div>
+			<ul class="display list-group list-group-flush"></ul>
+
+			<div class="row justify-content-center">
+				<button class="col-auto" >Submit</button>
+			</div>
+		</form>
+	</div>
+	<div class="row mx-auto">
+
+	</div>
+</div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" >
+
+
+
+	$('#file').change(function() {
+		var files = this.files;
+		htmlList = "";
+		for (var i = 0; i < files.length; i++)
+		{
+			htmlList += "<li class='list-group-item'>" + files[i].name + "</li>"
+
+		}
+
+		$('.display').html(htmlList);
+	});
+
+	$('#FilesForm').submit(function(event){
+		event.preventDefault();	
+		var data = new FormData(this);
+		$.ajax({
+			url: "",
+			dataType : 'jsonp',
+			data : data,
+			type: 'POST',
+			processData: false,
+			contentType: false,
+			success:function(data, textStatus, jqXHR){
+				alert(data);
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+
+				alert(textStatus);
+        //if fails     
+    }
+});
+	});
+</script>
+
+</body>
+</html>
