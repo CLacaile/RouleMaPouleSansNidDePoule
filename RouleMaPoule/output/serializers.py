@@ -1,14 +1,14 @@
-from .models import *
+from .models import TrustRate, RoadGrade
 from rest_framework import serializers
 
 
-class TrustRateSerializer(serializers.HyperlinkedModelSerializer):
+class TrustRateSerializer(serializers.ModelSerializer):
     class Meta:
-        model: TrustRate
-        fields: ['timestamp', 'rate', 'trust_waypoint']
+        model = TrustRate
+        fields = ['id', 'timestamp', 'rate', 'trust_waypoint']
 
 
-class RoadGradeSerializer(serializers.HyperlinkedModelSerializer):
+class RoadGradeSerializer(serializers.ModelSerializer):
     class Meta:
-        model: RoadGrade
-        fields: ['timestamp', 'grade', 'road_waypoint']
+        model = RoadGrade
+        fields = ['id', 'timestamp', 'grade', 'road_waypoint']
