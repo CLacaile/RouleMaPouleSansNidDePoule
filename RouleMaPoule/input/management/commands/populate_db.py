@@ -5,8 +5,8 @@ import random
 
 #47.3901, 0.6873
 class Command(BaseCommand):
-    args = '<foo bar ...>'
-    help = 'our help string comes here'
+    #args = '<foo bar ...>'
+    #help = 'our help string comes here'
 
     def populate(self):
         random.seed(666)
