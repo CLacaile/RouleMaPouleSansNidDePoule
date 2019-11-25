@@ -17,12 +17,15 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet
+from output.views import RoadGradeViewSet, TrustRateViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'api/v1.0/input/path', PathViewSet)
 router.register(r'api/v1.0/input/waypoint', WaypointViewSet)
 router.register(r'api/v1.0/input/acceleration', AccelerationViewSet)
+router.register(r'api/v1.0/output/roadgrade', RoadGradeViewSet)
+router.register(r'api/v1.0/output/trustrate', TrustRateViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
