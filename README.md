@@ -92,21 +92,23 @@ Il faut ajouter manuellement chaque objet :
 ## Installation de la partie front-end graphique: 
 
 1. Pour Windows installer une application de serveur web ( Type wampp: http://www.wampserver.com/en/ )
+
    Pour Linux installer un serveur web et php
    ```console
-    apt-get install apache2 php7.0 php7.0-mysql libapache2-mod-php7.0
+    apt-get install apache2 php7.0 libapache2-mod-php7.0
    ```
 
 2. Placer les fichiers contenue dans '/input_frontend' dans votre dossier de site web:
 3. Changer les lignes suivantes :
-  upload_no_connexion.html :
-  - ligne 60 :
+
+  -upload_no_connexion.html :
+   ligne 60 :
    ```javascript
       url : [url rest POST files],
    ```
-  scripts.js :
-  - ligne 11 :
+  -scripts.js :
+   ligne 11 :
    ```javascript
       url : [url rest POST connexion],
    ```
-3. Lancer votre navigateur sur votre site.
+4. Lancer votre navigateur sur votre site.
