@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Path, Waypoint, Acceleration
 from input.serializers import PathSerializer, WaypointSerializer, AccelerationSerializer
 from rest_framework import viewsets
+from rest_framework import views
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
