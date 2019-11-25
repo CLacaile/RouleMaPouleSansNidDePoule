@@ -32,6 +32,10 @@
 	<div class="row mx-auto">
 
 	</div>
+
+	<div class="row mx-auto " id="output">
+
+	</div>
 </div>
 
 
@@ -39,40 +43,32 @@
 
 
 <script type="text/javascript" >
-
-
-
 	$('#file').change(function() {
 		var files = this.files;
 		htmlList = "";
 		for (var i = 0; i < files.length; i++)
 		{
 			htmlList += "<li class='list-group-item'>" + files[i].name + "</li>"
-
 		}
-
 		$('.display').html(htmlList);
 	});
-
 	$('#FilesForm').submit(function(event){
 		event.preventDefault();	
-		var data = new FormData(this);
+		var datainput = new FormData(this);
 		$.ajax({
-			url: "",
-			dataType : 'jsonp',
-			data : data,
+			url: "getdata.php",
+			data : datainput,
 			type: 'POST',
 			processData: false,
 			contentType: false,
 			success:function(data, textStatus, jqXHR){
-				alert(data);
+				
+				$('#output').html(data);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
-
-				alert(textStatus);
-        //if fails     
-    }
-});
+				alert(errorThrown); 
+			}
+		});
 	});
 </script>
 
