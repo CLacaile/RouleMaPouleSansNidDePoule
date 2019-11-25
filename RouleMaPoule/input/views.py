@@ -23,3 +23,13 @@ class AccelerationViewSet(viewsets.ModelViewSet):
     """
     queryset = Acceleration.objects.all()
     serializer_class = AccelerationSerializer
+
+class FileUploadView(views.APIView):
+    parser_classes = [FileUploadParser]
+
+    def put(self, request, filename, format=None):
+        file_obj = request.data['file']
+        # ...
+        # do some stuff with uploaded file
+        # ...
+        return Response(status=204)
