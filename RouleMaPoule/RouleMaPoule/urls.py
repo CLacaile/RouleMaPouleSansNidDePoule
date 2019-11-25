@@ -21,9 +21,11 @@ from output.views import RoadGradeViewSet, TrustRateViewSet
 
 
 router = routers.DefaultRouter()
+# Input API routes
 router.register(r'api/v1.0/input/path', PathViewSet)
 router.register(r'api/v1.0/input/waypoint', WaypointViewSet)
 router.register(r'api/v1.0/input/acceleration', AccelerationViewSet)
+# Output API routes
 router.register(r'api/v1.0/output/roadgrade', RoadGradeViewSet)
 router.register(r'api/v1.0/output/trustrate', TrustRateViewSet)
 
