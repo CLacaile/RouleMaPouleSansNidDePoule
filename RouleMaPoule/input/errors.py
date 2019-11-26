@@ -1,4 +1,4 @@
-from RouleMaPoule.input.exceptions import Error
+from input.exceptions import Error
 
 class WrongNumberOfColumns(Error):
     pass
