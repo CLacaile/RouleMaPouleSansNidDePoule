@@ -80,50 +80,50 @@ def csv_upload(csv_file):
     Args:
         - csv_file a CSV file to insert into the db
     """
-        #Check if file is CSV
-        #Check if file is empty
+    #Check if file is CSV
+    #Check if file is empty
 
-        #init Path
-        id_sensor = NOT_DEFINED
-        last_waypoint = Waypoint()
-        waypoint = Waypoint()
-        path = Path()
-        path.save()
+    #init Path
+    id_sensor = NOT_DEFINED
+    last_waypoint = Waypoint()
+    waypoint = Waypoint()
+    path = Path()
+    path.save()
 
-        #read the CSV file
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        next(csv_reader, None)  # skip the headers
-        index = 1
-        for row in csv_reader:
-            try:
-                check_csv(row)
-                if(id_sensor==NOT_DEFINED):
-                    try:
-                          path.id_sensor = int(row[ID_SENSOR])
-                    except:
-                        logger.warning("CSV import : row "+str(index)+" INVALID id_sensor")
-                if(row[LATITUDE]!=last_waypoint.latitude or row[LONGITUDE]!=last_waypoint.latitude):
-                    waypoint = Waypoint(latitude=float(row[LATITUDE]),longitude=float(row[LONGITUDE]))
-                    waypoint.save()
-                    path.waypoints.add(waypoint)
-                acceleration =  Acceleration(timestamp=row[DATE], accelx=row[ACCELX], accely=row[ACCELY], accelz=row[ACCELZ])
-                acceleration.save()
-                waypoint.accelerations.add(acceleration)
+    #read the CSV file
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    next(csv_reader, None)  # skip the headers
+    index = 1
+    for row in csv_reader:
+        try:
+            check_csv(row)
+            if(id_sensor==NOT_DEFINED):
+                try:
+                        path.id_sensor = int(row[ID_SENSOR])
+                except:
+                    logger.warning("CSV import : row "+str(index)+" INVALID id_sensor")
+            if(row[LATITUDE]!=last_waypoint.latitude or row[LONGITUDE]!=last_waypoint.latitude):
+                waypoint = Waypoint(latitude=float(row[LATITUDE]),longitude=float(row[LONGITUDE]))
                 waypoint.save()
-            except WrongNumberOfColumns:
-                logger.warning("CSV import : row "+str(index)+"Wrong number of columns")
+                path.waypoints.add(waypoint)
+            acceleration =  Acceleration(timestamp=row[DATE], accelx=row[ACCELX], accely=row[ACCELY], accelz=row[ACCELZ])
+            acceleration.save()
+            waypoint.accelerations.add(acceleration)
+            waypoint.save()
+        except WrongNumberOfColumns:
+            logger.warning("CSV import : row "+str(index)+"Wrong number of columns")
 
-            except WrongGPSData:
-                logger.warning("CSV import : row "+str(index)+"Wrong GPS data")
+        except WrongGPSData:
+            logger.warning("CSV import : row "+str(index)+"Wrong GPS data")
 
-            except WrongAccelerationValue:
-                logger.warning("CSV import : row "+str(index)+" The acceleration number is out of bounds")
+        except WrongAccelerationValue:
+            logger.warning("CSV import : row "+str(index)+" The acceleration number is out of bounds")
 
-            except ValueError:
-                tb = traceback.format_exc()
-                logger.warning("CSV import : row "+str(index)+" "+tb.title())
+        except ValueError:
+            tb = traceback.format_exc()
+            logger.warning("CSV import : row "+str(index)+" "+tb.title())
 
-            except Exception as e:
-                logger.warning("CSV import : row "+str(index)+" "+str(e))
-            index += 1
-        path.save()
+        except Exception as e:
+            logger.warning("CSV import : row "+str(index)+" "+str(e))
+        index += 1
+    path.save()
