@@ -40,6 +40,4 @@ class FileUploadView(views.APIView):
             raise ParseError("Empty content")
         csv_file = request.data['file']
 
-
-
         return Response(status=204)
