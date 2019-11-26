@@ -28,6 +28,8 @@ def calculate_road_grade(waypointObject):
                 coeff_var = stdev / mu
                 road_grade = (1 - coeff_var) * 5
                 return road_grade
+    except:
+        pass
 
 def calculate_trust_rate(waypointObject):
     """
@@ -51,6 +53,8 @@ def calculate_trust_rate(waypointObject):
                 coeff_var = stdev / mu
                 trust_rate = 1 - coeff_var
                 return trust_rate
+    except:
+        pass
 
 def process_waypoint_calculations(waypointObject):
     """
