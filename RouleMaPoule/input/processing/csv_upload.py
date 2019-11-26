@@ -3,7 +3,7 @@ import logging
 import traceback
 from datetime import datetime
 from input.models import Path, Waypoint, Acceleration
-from RouleMaPoule.input.errors import WrongNumberOfColumns, WrongGPSData, WrongAccelerationValue
+from input.errors import WrongNumberOfColumns, WrongGPSData, WrongAccelerationValue
 
 # CONSTANTS
 DATE = 0
