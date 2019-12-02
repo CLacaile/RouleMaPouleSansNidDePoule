@@ -7,7 +7,6 @@ from datetime import datetime as dt
 from .models import Path, Waypoint, Acceleration
 from .processing import csv_upload, calculation_logic
 
-"""
 class CSV_import_Tests(TestCase):
 
     def test_import_csv(self):
