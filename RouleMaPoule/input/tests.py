@@ -11,7 +11,7 @@ class CSV_import_Tests(TestCase):
 
     def test_import_csv(self):
         csv_file= open('test.csv', 'r+')
-        csv_upload.csv_upload(csv_file)
+        csv_upload.csv_upload(csv_file.read())
         self.assertIs(False, False)
 
 class calc_logic_tests(TestCase):

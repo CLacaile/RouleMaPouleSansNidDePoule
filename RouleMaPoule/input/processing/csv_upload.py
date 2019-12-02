@@ -65,7 +65,6 @@ def check_csv(fields):
                 raise WrongAccelerationValue
 
 def check_csv(fields):
-    print(len(fields))
     if len(fields) < 7 or len(fields) > 7:
         raise WrongNumberOfColumns
 
