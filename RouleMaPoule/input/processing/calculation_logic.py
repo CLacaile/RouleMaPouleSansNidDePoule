@@ -28,7 +28,7 @@ def calculate_road_grade(waypointObject):
             else:
                 coeff_var = stdev / mu
                 road_grade = (1 - coeff_var) * 5
-                return road_grade
+                return float(road_grade)
     except:
         pass
 
@@ -69,7 +69,7 @@ def process_waypoint_calculations(waypointObject):
         road_grade = calculate_road_grade(waypointObject)
         trust_rate = calculate_trust_rate(waypointObject)
 
-        new_roadgrade = RoadGrade(timestamp = dt.now(), grade = float(road_grade))
+        new_roadgrade = RoadGrade(timestamp = dt.now(), grade = road_grade)
         new_roadgrade.road_waypoint_id = waypointObject.id
         new_roadgrade.save()
 

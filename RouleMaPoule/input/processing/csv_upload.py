@@ -45,7 +45,8 @@ def check_csv(data):
             datetime.strptime(data[i], '%Y-%m-%d %H:%M:%S')
 
         if i == ID_SENSOR:
-            int(data[i])
+            print("do_nothing")
+            #int(data[i])
 
         if i == LATITUDE:
             float(data[i])
@@ -72,14 +73,19 @@ def check_csv(data):
             if int(data[i]) > 65535 or int(data[i]) < 0:
                 raise WrongAccelerationValue
 
+
 def csv_upload(csv_file):
-    """ 
+    file = csv_file
+
+"""
+def csv_upload(csv_file):
+    """ """
     This function uploades parses a given CSV file into objects and 
     store them in the db, after having checked the file using check_csv.
     
     Args:
         - csv_file a CSV file to insert into the db
-    """
+    """ """
     #Check if file is CSV
     #Check if file is empty
 
@@ -127,3 +133,4 @@ def csv_upload(csv_file):
             logger.warning("CSV import : row "+str(index)+" "+str(e))
         index += 1
     path.save()
+"""
