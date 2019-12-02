@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import include, path
 from rest_framework import routers
-from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet
+from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet, FileUploadView
 
 
 router = routers.DefaultRouter()
@@ -28,5 +28,7 @@ router.register(r'api/v1.0/input/acceleration', AccelerationViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'api/v1.0/input/upload', FileUploadView.as_view())
+
 ]

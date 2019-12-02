@@ -56,17 +56,17 @@
 		event.preventDefault();	
 		var datainput = new FormData(this);
 		$.ajax({
-			url: "getdata.php",
+			url: "http://localhost:8000/api/v1.0/input/upload",
 			data : datainput,
+            contentType: false,
 			type: 'POST',
 			processData: false,
-			contentType: false,
 			success:function(data, textStatus, jqXHR){
 				
 				$('#output').html(data);
 			},
-			error: function(jqXHR, textStatus, errorThrown){
-				alert(errorThrown); 
+			error: function(data,jqXHR, textStatus, errorThrown){
+				alert(data);
 			}
 		});
 	});
