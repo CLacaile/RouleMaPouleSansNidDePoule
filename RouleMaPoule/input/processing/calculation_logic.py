@@ -2,6 +2,7 @@ from input.models import Waypoint, Acceleration
 from output.models import RoadGrade, TrustRate
 from input.errors import notEnoughDataPointsError
 import statistics as stat
+from datetime import datetime as dt
 import logging
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,8 @@ def calculate_road_grade(waypointObject):
                 coeff_var = stdev / mu
                 road_grade = (1 - coeff_var) * 5
                 return road_grade
+    except:
+        pass
 
 def calculate_trust_rate(waypointObject):
     """
@@ -50,7 +53,9 @@ def calculate_trust_rate(waypointObject):
             else:
                 coeff_var = stdev / mu
                 trust_rate = 1 - coeff_var
-                return trust_rate
+                return float(trust_rate)
+    except:
+        pass
 
 def process_waypoint_calculations(waypointObject):
     """
@@ -64,11 +69,11 @@ def process_waypoint_calculations(waypointObject):
         road_grade = calculate_road_grade(waypointObject)
         trust_rate = calculate_trust_rate(waypointObject)
 
-        new_roadgrade = RoadGrade(timestamp = datetime.now(), grade = float(road_grade))
+        new_roadgrade = RoadGrade(timestamp = dt.now(), grade = float(road_grade))
         new_roadgrade.road_waypoint_id = waypointObject.id
         new_roadgrade.save()
 
-        new_trustrate = TrustRate(timestamp = datetime.now(), rate = float(trust_rate))
+        new_trustrate = TrustRate(timestamp = dt.now(), rate = trust_rate)
         new_trustrate.trust_waypoint_id = waypointObject.id
         new_trustrate.save()
     
