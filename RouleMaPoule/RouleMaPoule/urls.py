@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import include, path
 from rest_framework import routers
-from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet
+from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet, FileUploadView
 from output.views import RoadGradeViewSet, TrustRateViewSet
 
 
