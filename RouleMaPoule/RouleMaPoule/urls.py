@@ -18,7 +18,10 @@ from django.urls import include, path
 from rest_framework import routers
 from input.views import PathViewSet, WaypointViewSet, AccelerationViewSet, FileUploadView
 from output.views import RoadGradeViewSet, TrustRateViewSet
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.DefaultRouter()
 # Input API routes
@@ -29,11 +32,14 @@ router.register(r'api/v1.0/input/acceleration', AccelerationViewSet)
 router.register(r'api/v1.0/output/roadgrade', RoadGradeViewSet)
 router.register(r'api/v1.0/output/trustrate', TrustRateViewSet)
 
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'api/v1.0/input/upload', FileUploadView.as_view())
-
+    path(r'api/v1.0/input/upload', FileUploadView.as_view()),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]

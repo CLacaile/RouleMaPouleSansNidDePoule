@@ -8,8 +8,11 @@ from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .processing import csv_upload as CSV
+from rest_framework.permissions import IsAuthenticated
+
 
 class PathViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     """
     API endpoint that allows Path to be viewed or edited    
     """
@@ -17,6 +20,7 @@ class PathViewSet(viewsets.ModelViewSet):
     serializer_class = PathSerializer
 
 class WaypointViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     """
     API endpoint that allows Waypoint to be viewed or edited    
     """
@@ -24,6 +28,7 @@ class WaypointViewSet(viewsets.ModelViewSet):
     serializer_class = WaypointSerializer
 
 class AccelerationViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     """
     API endpoint that allows Acceleration to be viewed or edited    
     """
@@ -33,6 +38,7 @@ class AccelerationViewSet(viewsets.ModelViewSet):
 
 
 class FileUploadView(views.APIView):
+    permission_classes = (IsAuthenticated,)
 
     parser_classes = (MultiPartParser,)
 
