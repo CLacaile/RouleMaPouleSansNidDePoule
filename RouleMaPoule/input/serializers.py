@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class PathSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Path
         fields = ['id', 'id_sensor']
