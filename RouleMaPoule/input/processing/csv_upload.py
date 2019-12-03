@@ -64,41 +64,6 @@ def check_csv(fields):
             if int(fields[i]) > 65535 or int(fields[i]) < 0:
                 raise WrongAccelerationValue
 
-def check_csv(fields):
-    if len(fields) < 7 or len(fields) > 7:
-        raise WrongNumberOfColumns
-
-    for i in range(len(fields)):
-        if i == DATE:
-            datetime.strptime(fields[i], '%Y-%m-%d %H:%M:%S')
-
-        if i == ID_SENSOR:
-            int(fields[i])
-
-        if i == LATITUDE:
-            float(fields[i])
-            if float(fields[i]) > 90 or float(fields[i]) < -90:
-                raise WrongGPSData
-
-        if i == LONGITUDE:
-            float(fields[i])
-            if float(fields[i]) > 180 or float(fields[i]) < -180:
-                raise WrongGPSData
-
-        if i == ACCELX:
-            int(fields[i])
-            if int(fields[i]) > 65535 or int(fields[i]) < 0:
-                raise WrongAccelerationValue
-
-        if i == ACCELY:
-            int(fields[i])
-            if int(fields[i]) > 65535 or int(fields[i]) < 0:
-                raise WrongAccelerationValue
-
-        if i == ACCELZ:
-            int(fields[i])
-            if int(fields[i]) > 65535 or int(fields[i]) < 0:
-                raise WrongAccelerationValue
 
 def csv_upload(csv_file):
     """
