@@ -38,7 +38,7 @@ router.register(r'api/v1.0/output/trustrate', TrustRateViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'api/v1.0/input/upload', FileUploadView.as_view())
+    path(r'api/v1.0/input/upload', FileUploadView.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh')
