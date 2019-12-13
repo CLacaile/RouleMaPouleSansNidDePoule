@@ -13,8 +13,21 @@ from input.errors import WrongNumberOfColumns, WrongGPSData, WrongAccelerationVa
 
 
 class Authentification_Tests(TestCase):
+    """
+        Cass that tests if the authentification and protection of
+        the API endpoints
+    """
 
     def test_token_ok(self):
+        """
+            Test if the token is sent for a successfull authentification
+
+            Note :
+                it first creates a user
+                then request the login endpoint of the app
+                finally checks if the response's code and if the token is in the response
+
+        """
         client = RequestsClient()
         self.user = User.objects.create_user(username='testuser', password='12345')
         params = {'username': 'testuser', 'password': '12345'}
@@ -25,6 +38,14 @@ class Authentification_Tests(TestCase):
 
 
     def test_token_ko(self):
+        """
+            Test if the token is sent for a unsuccessfull authentification
+
+            Note :
+                request the login endpoint of the app with some logins credentials that doesn't exist
+                checks if the response's code
+
+        """
         client = RequestsClient()
         params = {'username': 'testuser', 'password': '12345'}
         response = client.post('http://127.0.0.1:8000/api/token/', params)
@@ -33,6 +54,14 @@ class Authentification_Tests(TestCase):
 
 
     def test_non_authorizied_access(self):
+        """
+            Test an unauthorized access to all endpoints
+
+            Note :
+                request the endpoints
+                checks the response's code
+
+        """
         client = RequestsClient()
         response = client.get('http://127.0.0.1:8000/api/v1.0/input/waypoint/')
         assert response.status_code == 401
@@ -42,6 +71,16 @@ class Authentification_Tests(TestCase):
         assert response.status_code == 401
 
     def test_authorized_access(self):
+        """
+            Test an authorized access to all endpoints
+
+            Note :
+                creates a user
+                request the login endpoint of the app
+                gets the token
+                request the endpoints and checks the response's code
+
+        """
         client = RequestsClient()
         self.user = User.objects.create_user(username='testuser', password='12345')
         params = {'username': 'testuser', 'password': '12345'}
@@ -61,9 +100,16 @@ class Authentification_Tests(TestCase):
 
 
 class CSV_import_Tests(TestCase):
+    """
+        Test the import of the CSV file
 
+    """
 
     def setUp(self):
+        """
+            set up random variables for the import
+
+        """
         self.timestamp = "2019-03-03 22:10:10"
         self.sensor_id = str(randint(0, 100))
         self.latitude = str(round(uniform(-90, 90), 4))
@@ -73,6 +119,10 @@ class CSV_import_Tests(TestCase):
         self.accelz = str(randint(0, 65535))
 
     def test_check_csv_ok(self):
+        """
+            Test the check_csv function with a correct csv line
+
+        """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, self.longitude, self.accelx, self.accely,
                         self.accelz]
@@ -82,6 +132,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(False)
 
     def test_check_csv_invalid_date_format(self):
+        """
+            Test the check_csv function with an invalid date format
+
+            Raises :
+                ValueError : with a wrong date
+
+        """
         try:
             csv_line = ["2012-28-98", self.sensor_id, self.latitude, self.longitude, self.accelx, self.accely,
                         self.accelz]
@@ -91,6 +148,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(True)
 
     def test_check_csv_invalid_wrong_number_of_column(self):
+        """
+            Test the check_csv function with an invalid number of column
+
+            Raises :
+                WrongNumberOfColumns : if the number of color is invalide
+
+        """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, self.longitude, self.accelx, self.accely]
             CSV.check_csv(csv_line)
@@ -106,6 +170,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(True)
 
     def test_check_csv_invalid_longitude(self):
+        """
+            Test the check_csv function with an invalid longitude
+
+            Raises :
+                WrongGPSData : if the longitude is invalid
+
+        """
         try:
             csv_line = [self.timestamp, self.sensor_id, "1000000", self.longitude, self.accelx, self.accely,
                         self.accelz]
@@ -122,6 +193,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(True)
 
     def test_check_csv_invalid_latitude(self):
+        """
+            Test the check_csv function with an invalid latitude
+
+            Raises :
+                WrongGPSData : if the longitude is latitude
+
+        """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, "1000000", self.accelx, self.accely,
                         self.accelz]
@@ -138,6 +216,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(True)
 
     def test_check_csv_invalid_acceleration_value(self):
+        """
+            Test the check_csv function with an invalid acceleration value
+
+            Raises :
+                WrongAccelerationValue : if the acceleration value is invalid
+
+        """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, self.longitude, "100000", self.accely,
                         self.accelz]
@@ -154,6 +239,13 @@ class CSV_import_Tests(TestCase):
             self.assert_(True)
 
     def test_csv_upload_ok(self):
+        """
+            Test if the csv uploaded to the database is valid
+
+            Note :
+                test if every field is valid
+
+        """
         pathCount = Path.objects.count()
         waypointCount = Waypoint.objects.count()
         accelerationCount = Acceleration.objects.count()
@@ -195,7 +287,6 @@ class CSV_import_Tests(TestCase):
         self.assertIs(False, False)
 
 class calc_logic_tests(TestCase):
-
     def test_calc_processing(self):
         #create test data
         path_test = Path(id = 1, id_sensor = 0)
