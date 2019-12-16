@@ -135,9 +135,6 @@ class CSV_import_Tests(TestCase):
         """
             Test the check_csv function with an invalid date format
 
-            Raises :
-                ValueError : with a wrong date
-
         """
         try:
             csv_line = ["2012-28-98", self.sensor_id, self.latitude, self.longitude, self.accelx, self.accely,
@@ -150,9 +147,6 @@ class CSV_import_Tests(TestCase):
     def test_check_csv_invalid_wrong_number_of_column(self):
         """
             Test the check_csv function with an invalid number of column
-
-            Raises :
-                WrongNumberOfColumns : if the number of color is invalide
 
         """
         try:
@@ -172,9 +166,6 @@ class CSV_import_Tests(TestCase):
     def test_check_csv_invalid_longitude(self):
         """
             Test the check_csv function with an invalid longitude
-
-            Raises :
-                WrongGPSData : if the longitude is invalid
 
         """
         try:
@@ -196,9 +187,6 @@ class CSV_import_Tests(TestCase):
         """
             Test the check_csv function with an invalid latitude
 
-            Raises :
-                WrongGPSData : if the longitude is latitude
-
         """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, "1000000", self.accelx, self.accely,
@@ -219,9 +207,6 @@ class CSV_import_Tests(TestCase):
         """
             Test the check_csv function with an invalid acceleration value
 
-            Raises :
-                WrongAccelerationValue : if the acceleration value is invalid
-
         """
         try:
             csv_line = [self.timestamp, self.sensor_id, self.latitude, self.longitude, "100000", self.accely,
@@ -241,9 +226,6 @@ class CSV_import_Tests(TestCase):
     def test_csv_upload_ok(self):
         """
             Test if the csv uploaded to the database is valid
-
-            Note :
-                test if every field is valid
 
         """
         pathCount = Path.objects.count()
@@ -281,10 +263,6 @@ class CSV_import_Tests(TestCase):
         self.assertAlmostEqual(acceleration.accelz, int(self.accelz))
 
 
-    def test_csv_upload_endpoint(self):
-        csv_file = open('test.csv', 'r+')
-        #csv.csv_upload(csv_file.read())
-        self.assertIs(False, False)
 
 class calc_logic_tests(TestCase):
     def test_calc_processing(self):
