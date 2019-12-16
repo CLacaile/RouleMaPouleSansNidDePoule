@@ -5,11 +5,12 @@ from rest_framework.test import RequestsClient
 from random import seed
 from random import seed, random, uniform
 from random import randint
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta
 
 from .models import Path, Waypoint, Acceleration
-from .processing import csv_upload as CSV, calculation_logic
-from input.errors import WrongNumberOfColumns, WrongGPSData, WrongAccelerationValue
+from output.models import RoadGrade, TrustRate
+from .processing import csv_upload as CSV, calculation_logic as calc
+from input.errors import WrongNumberOfColumns, WrongGPSData, WrongAccelerationValue, notEnoughDataPointsError
 
 
 class Authentification_Tests(TestCase):
@@ -265,23 +266,104 @@ class CSV_import_Tests(TestCase):
 
 
 class calc_logic_tests(TestCase):
-    def test_calc_processing(self):
+
+    def setUp(self):
         #create test data
         path_test = Path(id = 1, id_sensor = 0)
         path_test.save()
-        waypoint_test = Waypoint(id = 1, longitude = float(47.3901), latitude = float(0.6869))
+        waypoint_test = Waypoint(id = 1, longitude = float(47.3901), latitude = float(0.6871))
         waypoint_test.path_id = path_test.id
         waypoint_test.save()
-
-        seed(1)
         
-        for i in range(20):
+    def test_calc_needed(self):
+        #create test data
+        seed(1)
+
+        for i in range(16):
             accel_value = randint(0, 65535)
-            accel_test = Acceleration(id = i, timestamp = dt.now(), accelx = 0, accely = 0, accelz = accel_value)
-            accel_test.waypoint_id = waypoint_test.id
-            accel_test.save()
+            accel_test = Acceleration.objects.create(id = i, timestamp = dt.now(), accelx = 0, accely = 0, accelz = accel_value, waypoint_id = 1)
 
+        last_accel_timestamp = Acceleration.objects.latest('timestamp').timestamp
 
-        waypoint_testlist = Waypoint.objects.get(id = 1)
-        calculation_logic.process_waypoint_calculations(waypoint_testlist)
-        self.assertIs(False, False)
+        #first test = no grade data available
+        tested_waypoint = Waypoint.objects.get(id = 1)
+        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
+
+        #second test = grade data is available but outdated
+        grade_test = RoadGrade.objects.create(id = 1, timestamp = last_accel_timestamp - timedelta(days=2), grade = float(4.2), longitude = float(47.3901), latitude = float(0.6871))
+        tested_waypoint = Waypoint.objects.get(id = 1)
+        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
+
+    def test_calc_not_needed(self):
+        #create test data
+        seed(1)
+
+        for i in range(16):
+            accel_value = randint(0, 65535)
+            accel_test = Acceleration.objects.create(id = i, timestamp = dt.now(), accelx = 0, accely = 0, accelz = accel_value, waypoint_id = 1)
+            
+        last_accel_timestamp = Acceleration.objects.latest('timestamp').timestamp
+        grade_test = RoadGrade.objects.create(id = 1, timestamp = last_accel_timestamp, grade = float(4.2), longitude = float(47.3901), latitude = float(0.6871))
+
+        tested_waypoint = Waypoint.objects.get(id = 1)
+        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), False)
+
+    def test_grade_calc_enough_data(self):
+        #create more than 15 data points
+        seed(1)
+
+        for i in range(16):
+            accel_value = randint(0, 65535)
+            accel_test = Acceleration.objects.create(id = i, timestamp = dt.now(), accelx = 0, accely = 0, accelz = accel_value, waypoint_id = 1)
+        
+        try:
+            #perform roadgrade calculation and test the value
+            tested_waypoint = Waypoint.objects.get(id = 1)
+            self.assertGreaterEqual(calc.calculate_road_grade(tested_waypoint.latitude, tested_waypoint.longitude), 0)
+            self.assertLessEqual(calc.calculate_road_grade(tested_waypoint.latitude, tested_waypoint.longitude), 5)
+        except notEnoughDataPointsError:
+            self.assert_(True)
+    
+    def test_grade_calc_not_enough_data(self):
+        #create less or exactly 15 data points
+        seed(1)
+
+        for i in range(15):
+            accel_value = randint(0, 65535)
+            accel_test = Acceleration.objects.create(id = i, timestamp = dt.now(), accelx = 0, accely = 0, accelz = accel_value, waypoint_id = 1)
+
+        try:
+            #perform roadgrade calculation and test the value
+            tested_waypoint = Waypoint.objects.get(id = 1)
+            self.assertGreaterEqual(calc.calculate_road_grade(tested_waypoint.latitude, tested_waypoint.longitude), 0)
+            self.assertLessEqual(calc.calculate_road_grade(tested_waypoint.latitude, tested_waypoint.longitude), 5)
+        except notEnoughDataPointsError:
+            self.assert_(True)
+
+    def test_trust_calc_enough_data(self):
+        #create more than 5 roadgrade data points
+        for i in range(6):
+            new_road_grade = RoadGrade.objects.create(id = i, timestamp = dt.now(), grade = uniform(0,5), longitude = float(47.3901), latitude = float(0.6871))
+        try:
+            #perform trustrate calculation and test the value
+            tested_waypoint = Waypoint.objects.get(id = 1)
+            test_value = calc.calculate_trust_rate(tested_waypoint.latitude, tested_waypoint.longitude)
+        except notEnoughDataPointsError:
+            self.assert_(True)
+        else:
+            self.assertGreaterEqual(test_value, 0)
+            self.assertLessEqual(test_value, 1)
+
+    def test_trust_calc_enough_data(self):
+        #create less or exactly 5 roadgrade data points
+        for i in range(5):
+            new_road_grade = RoadGrade.objects.create(id = i, timestamp = dt.now(), grade = uniform(0,5), longitude = float(47.3901), latitude = float(0.6871))
+        try:
+            #perform trustrate calculation and test the value
+            tested_waypoint = Waypoint.objects.get(id = 1)
+            test_value = calc.calculate_trust_rate(tested_waypoint.latitude, tested_waypoint.longitude)
+        except notEnoughDataPointsError:
+            self.assert_(True)
+        else:
+            self.assertGreaterEqual(test_value, 0)
+            self.assertLessEqual(test_value, 1)
