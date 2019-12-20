@@ -112,3 +112,12 @@ Il faut ajouter manuellement chaque objet :
       url : [url rest POST connexion],
    ```
 4. Lancer votre navigateur sur votre site.
+
+## Authentification
+Notre application est protégée par un couple nom d'utilisateur et mot de passe. 
+
+1. Demande du token sur /api/token
+2. Faire une requête sur un endpoint protégé en mettant le token dans le header de la demande
+```
+Authenrization : Brearer <<token>>
+```
