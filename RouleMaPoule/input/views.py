@@ -8,6 +8,7 @@ from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .processing import csv_upload as CSV
+from .processing import calculation_logic as calc
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -38,7 +39,7 @@ class AccelerationViewSet(viewsets.ModelViewSet):
 
 
 class FileUploadView(views.APIView):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     parser_classes = (MultiPartParser,)
 
@@ -46,4 +47,6 @@ class FileUploadView(views.APIView):
         if 'file' not in request.data:
             raise ParseError("Empty content")
         CSV.csv_upload(request.data['file'].read().decode("utf-8")	)
+        calc.process_road_grade_calc()
+        calc.process_trust_rate_calc()
         return Response(status=204)
