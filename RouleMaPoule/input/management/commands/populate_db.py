@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from input.models import Path, Acceleration, Waypoint
 import datetime
+from datetime import timedelta
 import random
 
 #47.3901, 0.6873
@@ -20,10 +21,10 @@ class Command(BaseCommand):
                 waypoint.save()
                 path.waypoints.add(waypoint)
                 for y in range(36):
-                    startDate = datetime.datetime.now()
+                    startDate = datetime.datetime.now() - timedelta(days=1)
                     date = startDate + datetime.timedelta(milliseconds=200*y)
-                    accelx = random.randint(0,65535)
-                    acceleration = Acceleration(timestamp=date, accelx=accelx, accely=0, accelz=0)
+                    accelz = random.randint(0,65535)
+                    acceleration = Acceleration(timestamp=date, accelx=0, accely=0, accelz=accelz)
                     acceleration.save()
                     waypoint.accelerations.add(acceleration)
             path.save()

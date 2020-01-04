@@ -275,7 +275,7 @@ class calc_logic_tests(TestCase):
         waypoint_test.path_id = path_test.id
         waypoint_test.save()
         
-    def test_calc_needed(self):
+    def test_grade_calc_needed(self):
         #create test data
         seed(1)
 
@@ -287,14 +287,14 @@ class calc_logic_tests(TestCase):
 
         #first test = no grade data available
         tested_waypoint = Waypoint.objects.get(id = 1)
-        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
+        self.assertIs(calc.grade_calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
 
         #second test = grade data is available but outdated
         grade_test = RoadGrade.objects.create(id = 1, timestamp = last_accel_timestamp - timedelta(days=2), grade = float(4.2), longitude = float(47.3901), latitude = float(0.6871))
         tested_waypoint = Waypoint.objects.get(id = 1)
-        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
+        self.assertIs(calc.grade_calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), True)
 
-    def test_calc_not_needed(self):
+    def test_grade_calc_not_needed(self):
         #create test data
         seed(1)
 
@@ -306,7 +306,7 @@ class calc_logic_tests(TestCase):
         grade_test = RoadGrade.objects.create(id = 1, timestamp = last_accel_timestamp, grade = float(4.2), longitude = float(47.3901), latitude = float(0.6871))
 
         tested_waypoint = Waypoint.objects.get(id = 1)
-        self.assertIs(calc.calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), False)
+        self.assertIs(calc.grade_calculation_needed(tested_waypoint.latitude,tested_waypoint.longitude), False)
 
     def test_grade_calc_enough_data(self):
         #create more than 15 data points
