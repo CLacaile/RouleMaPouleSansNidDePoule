@@ -1,0 +1,16 @@
+
+/**
+*Color from : https://flatuicolors.com/palette/gb;
+*/
+.bg_color{
+	background-color: rgba(245, 246, 250,1.0);
+}
+h1{
+	color: rgba(47, 54, 64,1.0);
+}
+
+.map {
+	height: 40em;
+	width: 100%;
+}
+
