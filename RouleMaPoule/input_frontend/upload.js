@@ -1,5 +1,4 @@
 var url = 'http://localhost:8000/api/token/';
-url = 'login';
 
 $('#Modal-login').modal({
 	keyboard: false,
@@ -13,7 +12,6 @@ $('#loginForm').submit(function(e){
 	e.preventDefault();
 	$.ajax({
 		url: url,
-
 		method:'POST',
 		data:$('#loginForm').serialize(),
 		success : function(data, textStatus, jqXHR ){
