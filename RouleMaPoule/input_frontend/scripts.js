@@ -7,7 +7,6 @@ var map;
 var arrayMarker = new Array();
 
 var url = 'http://localhost:8000/api/token/';
-url = 'login';
 
 $('#Modal-login').modal({
 	keyboard: false,
