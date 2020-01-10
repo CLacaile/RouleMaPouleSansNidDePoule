@@ -6,7 +6,9 @@ var mapView;
 var map;
 var arrayMarker = new Array();
 
-var url = 'http://localhost:8000/api/token/';
+var urlLogin = 'http://localhost:8000/api/token/';
+
+var urlWaypoint = 'http://localhost:8000/api/v1.0/output/roadgrade/';
 
 $('#Modal-login').modal({
 	keyboard: false,
@@ -19,7 +21,7 @@ $('#Modal-login').modal({
 $('#loginForm').submit(function(e){
 	e.preventDefault();
 	$.ajax({
-		url: url,
+		url: urlLogin,
 
 		method:'POST',
 		data:$('#loginForm').serialize(),
@@ -39,12 +41,11 @@ $('#loginForm').submit(function(e){
 
 function loadWaypoints() {
 	$.ajax({
-		url: 'waypoint',
-		dataType : 'json',
+		url: urlWaypoint,
+		type: 'GET',
 		headers: {
-			'Authorization':'token ' + document.cookie,
+			'Authorization':'Bearer ' + document.cookie,
 		},
-		method:'get',
 		success : function(data, textStatus, jqXHR ){
 			var results = data.results;
 			var waypoint;
@@ -55,7 +56,7 @@ function loadWaypoints() {
 					geometry: new ol.geom.Point(
 						ol.proj.fromLonLat([ waypoint.latitude, waypoint.longitude])
 						),
-					data : "marker" + waypoint.id,
+					data : "Grade: " + waypoint.grade,
 					header : "h1"
 				});
 
