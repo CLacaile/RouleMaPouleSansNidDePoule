@@ -47,11 +47,11 @@ function loadWaypoints() {
 			'Authorization':'Bearer ' + document.cookie,
 		},
 		success : function(data, textStatus, jqXHR ){
-			var results = data.results;
+			var results = data;
 			var waypoint;
 			for (var i = 0; i < results.length; i++) {
 				waypoint = results[i];
-
+				// Marqueur
 				var marker = new ol.Feature({
 					geometry: new ol.geom.Point(
 						ol.proj.fromLonLat([ waypoint.latitude, waypoint.longitude])
@@ -59,7 +59,14 @@ function loadWaypoints() {
 					data : "Grade: " + waypoint.grade,
 					header : "h1"
 				});
-
+				// Couleur
+				/*marker.setStyle(new ol.style.Style({
+					image: new ol.style.Icon(({
+						color: '#ffcd46',
+						crossOrigin: 'anonymous',
+						src: 'dot.png'
+					}))
+				}));*/
 
 				arrayMarker.push(marker);
 			}
@@ -83,6 +90,8 @@ function fulfillMap() {
 	});
 
 	map.addLayer(vectorLayer);
+}
 
+function colorMarker(grade) {
 
 }
