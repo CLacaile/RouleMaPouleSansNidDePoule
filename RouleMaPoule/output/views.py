@@ -12,6 +12,7 @@ class TrustRateViewSet(viewsets.ModelViewSet):
     """
     queryset = TrustRate.objects.all()
     serializer_class = TrustRateSerializer
+    pagination_class = None
 
 
 class RoadGradeViewSet(viewsets.ModelViewSet):
@@ -21,3 +22,4 @@ class RoadGradeViewSet(viewsets.ModelViewSet):
     """
     queryset = RoadGrade.objects.all()
     serializer_class = RoadGradeSerializer
+    pagination_class = None
