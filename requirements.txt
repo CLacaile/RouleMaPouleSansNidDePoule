@@ -9,7 +9,7 @@ colorama==0.4.1
 dataclasses==0.6
 Django>=2.2.13
 django-cors-headers==3.2.1
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 djangorestframework-csv==2.1.0
 djangorestframework-simplejwt==4.3.0
 djongo==1.2.36
